@@ -13,18 +13,18 @@ export default function HeroSection() {
     >
       {/* Background grid */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(#4F8EF7 1px, transparent 1px), linear-gradient(90deg, #4F8EF7 1px, transparent 1px)",
+            "linear-gradient(#FBBF24 1px, transparent 1px), linear-gradient(90deg, #FBBF24 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
 
       {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[700px] rounded-full bg-[#4F8EF7] opacity-[0.08] blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/4 h-[300px] w-[300px] rounded-full bg-[#7C3AED] opacity-[0.07] blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 h-[250px] w-[250px] rounded-full bg-[#4F8EF7] opacity-[0.06] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[700px] rounded-full bg-[#FBBF24] opacity-[0.07] blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 h-[300px] w-[300px] rounded-full bg-[#F97316] opacity-[0.06] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 h-[250px] w-[250px] rounded-full bg-[#FBBF24] opacity-[0.05] blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-4 py-24 text-center sm:px-6 lg:px-8">
 
@@ -33,11 +33,11 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#0F1422] px-4 py-2 text-sm"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-2 text-sm"
         >
           <div className="flex items-center gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-3.5 w-3.5 fill-[#F59E0B] text-[#F59E0B]" />
+              <Star key={i} className="h-3.5 w-3.5 fill-[#FBBF24] text-[#FBBF24]" />
             ))}
           </div>
           <span className="font-semibold text-white">4.9</span>
@@ -52,9 +52,7 @@ export default function HeroSection() {
           className="mb-6 max-w-5xl text-5xl font-extrabold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl"
         >
           Your Complete{" "}
-          <span
-            className="bg-gradient-to-r from-[#4F8EF7] to-[#7C3AED] bg-clip-text text-transparent"
-          >
+          <span className="bg-gradient-to-r from-[#FBBF24] to-[#F97316] bg-clip-text text-transparent">
             Digital Solutions
           </span>{" "}
           for Business Success
@@ -68,7 +66,7 @@ export default function HeroSection() {
           className="mb-10 max-w-2xl text-lg leading-relaxed text-[#8B9CB6] md:text-xl"
         >
           From professional courses to enterprise software, marketing automation
-          to CRM—WeTrainEducation & Tech delivers integrated solutions that drive
+          to CRM — WeTrainEducation & Tech delivers integrated solutions that drive
           real growth.
         </motion.p>
 
@@ -81,14 +79,14 @@ export default function HeroSection() {
         >
           <Link
             href="#services"
-            className="group inline-flex items-center gap-2 rounded-full bg-[#4F8EF7] px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-[#4F8EF7]/30 transition-all hover:bg-[#3B7AE8] hover:shadow-[#4F8EF7]/50 hover:-translate-y-0.5"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#FBBF24] px-7 py-3.5 text-base font-semibold text-[#0A0A0A] shadow-lg shadow-[#FBBF24]/20 transition-all hover:bg-[#F59E0B] hover:shadow-[#FBBF24]/30 hover:-translate-y-0.5"
           >
             Explore Services
             <Zap className="h-4 w-4 transition-transform group-hover:scale-110" />
           </Link>
           <Link
             href="#proposal"
-            className="group inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#0F1422] px-7 py-3.5 text-base font-semibold text-white transition-all hover:border-[#4F8EF7]/50 hover:bg-[#141928] hover:-translate-y-0.5"
+            className="group inline-flex items-center gap-2 rounded-full border border-[#2A3447] bg-[#0F1422] px-7 py-3.5 text-base font-semibold text-white transition-all hover:border-[#FBBF24]/40 hover:bg-[#141928] hover:-translate-y-0.5"
           >
             Get a Proposal
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -112,7 +110,7 @@ export default function HeroSection() {
               key={i}
               className="rounded-2xl border border-[#1E2A3A] bg-[#0F1422]/80 px-6 py-5 text-center backdrop-blur-sm"
             >
-              <div className="mb-1 text-2xl font-extrabold text-white">{item.value}</div>
+              <div className="mb-1 text-2xl font-extrabold text-[#FBBF24]">{item.value}</div>
               <div className="text-sm text-[#8B9CB6]">{item.label}</div>
             </div>
           ))}

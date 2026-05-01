@@ -45,7 +45,7 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative overflow-hidden bg-[#0F1422] py-28">
       {/* Glow */}
-      <div className="pointer-events-none absolute right-1/4 top-1/4 h-[350px] w-[350px] rounded-full bg-[#7C3AED] opacity-[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute right-1/4 top-1/4 h-[350px] w-[350px] rounded-full bg-[#F97316] opacity-[0.04] blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -56,12 +56,12 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#080B14] px-4 py-1.5 text-sm font-medium text-[#4F8EF7]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-1.5 text-sm font-medium text-[#FBBF24]">
             Client Stories
           </span>
           <h2 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
             Trusted by{" "}
-            <span className="bg-gradient-to-r from-[#4F8EF7] to-[#7C3AED] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FBBF24] to-[#F97316] bg-clip-text text-transparent">
               Global Brands
             </span>
           </h2>
@@ -81,12 +81,12 @@ export default function Testimonials() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true, margin: "-40px" }}
                 whileHover={{ y: -4 }}
-                className="flex flex-col rounded-2xl border border-[#1E2A3A] bg-[#080B14] p-7 transition-all hover:border-[#4F8EF7]/30"
+                className="flex flex-col rounded-2xl border border-[#1E2A3A] bg-[#080B14] p-7 transition-all hover:border-[#FBBF24]/20"
               >
                 {/* Stars */}
                 <div className="mb-4 flex gap-0.5">
                   {[...Array(5)].map((_, si) => (
-                    <Star key={si} className={`h-4 w-4 ${si < t.rating ? "fill-[#F59E0B] text-[#F59E0B]" : "text-[#1E2A3A]"}`} />
+                    <Star key={si} className={`h-4 w-4 ${si < t.rating ? "fill-[#FBBF24] text-[#FBBF24]" : "text-[#1E2A3A]"}`} />
                   ))}
                 </div>
 
@@ -105,7 +105,7 @@ export default function Testimonials() {
                       onError={() => handleImageError(`avatar-${t.name}`)}
                     />
                   ) : (
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1E2A3A] bg-[#141928] text-sm font-bold text-[#4F8EF7]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1E2A3A] bg-[#141928] text-sm font-bold text-[#FBBF24]">
                       {t.avatar && hasError(`avatar-${t.name}`) ? (
                         <Image src={getPlaceholderImage("person")} alt="Placeholder" height={44} width={44} className="rounded-full object-cover" />
                       ) : (
@@ -120,9 +120,9 @@ export default function Testimonials() {
                 </div>
 
                 {t.achievement && (
-                  <div className="mt-4 rounded-xl border border-[#4F8EF7]/20 bg-[#4F8EF7]/5 p-3 text-center">
+                  <div className="mt-4 rounded-xl border border-[#FBBF24]/15 bg-[#FBBF24]/5 p-3 text-center">
                     <p className="text-xs text-[#8B9CB6]">Result</p>
-                    <p className="text-sm font-bold text-[#4F8EF7]">{t.achievement}</p>
+                    <p className="text-sm font-bold text-[#FBBF24]">{t.achievement}</p>
                   </div>
                 )}
               </motion.div>
@@ -147,7 +147,7 @@ export default function Testimonials() {
           {stats.map((s, i) => (
             <div key={i} className="text-center">
               <div className="mb-3 flex justify-center">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4F8EF7]/10 text-[#4F8EF7]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FBBF24]/10 text-[#FBBF24]">
                   <s.icon className="h-5 w-5" />
                 </div>
               </div>

@@ -82,7 +82,7 @@ export default function CoursesSection() {
   return (
     <section id="courses" className="relative overflow-hidden bg-[#0F1422] py-28">
       {/* Glow */}
-      <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-[#7C3AED] opacity-[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-[#F97316] opacity-[0.05] blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -93,12 +93,12 @@ export default function CoursesSection() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#080B14] px-4 py-1.5 text-sm font-medium text-[#4F8EF7]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-1.5 text-sm font-medium text-[#FBBF24]">
             Our Courses
           </span>
           <h2 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
             Professional{" "}
-            <span className="bg-gradient-to-r from-[#4F8EF7] to-[#7C3AED] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FBBF24] to-[#F97316] bg-clip-text text-transparent">
               Training Courses
             </span>
           </h2>
@@ -140,7 +140,7 @@ export default function CoursesSection() {
                   features={course.features}
                   imageUrl={course.imageUrl}
                   categoryLabel="Course"
-                  categoryClassName="bg-blue-500/10 text-blue-400"
+                  categoryClassName="bg-amber-500/10 text-amber-400"
                   detailHref={`/courses/${course.slug}`}
                   ctaHref={isAdmin ? undefined : `/courses/${course.slug}`}
                   ctaLabel="Enroll Now"
@@ -174,14 +174,14 @@ export default function CoursesSection() {
           {courses.length > 3 && (
             <Link
               href="/courses"
-              className="inline-flex items-center gap-2 rounded-full bg-[#4F8EF7] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#FBBF24] px-7 py-3 text-sm font-semibold text-[#0A0A0A] shadow-lg shadow-[#FBBF24]/20 transition-all hover:bg-[#F59E0B]"
             >
               View All Courses <ArrowRight className="h-4 w-4" />
             </Link>
           )}
           <Link
             href="/#proposal"
-            className="inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#080B14] px-7 py-3 text-sm font-semibold text-white transition-all hover:border-[#4F8EF7]/40"
+            className="inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#080B14] px-7 py-3 text-sm font-semibold text-white transition-all hover:border-[#FBBF24]/40"
           >
             Request Custom Training <ArrowRight className="h-4 w-4" />
           </Link>

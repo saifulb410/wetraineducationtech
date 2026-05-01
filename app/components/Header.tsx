@@ -86,12 +86,12 @@ export default function Header() {
                 onError={() => handleImageError("logo")}
               />
             ) : (
-              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[#4F8EF7] to-[#7C3AED] flex items-center justify-center text-white font-bold text-sm">
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[#FBBF24] to-[#F97316] flex items-center justify-center text-[#0A0A0A] font-bold text-sm">
                 W
               </div>
             )}
             <span className="hidden sm:inline font-bold text-white text-lg tracking-tight">
-              WeTrain<span className="text-[#4F8EF7]">Education</span>
+              WeTrain<span className="text-[#FBBF24]">Education</span>
             </span>
           </motion.div>
         </Link>
@@ -137,7 +137,7 @@ export default function Header() {
                       className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#8B9CB6] hover:text-white hover:bg-[#1E2A3A] transition-colors"
                       onClick={() => setMobileOpen(false)}
                     >
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#4F8EF7]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#FBBF24]" />
                       {sub.name}
                     </Link>
                   ))}
@@ -152,14 +152,14 @@ export default function Header() {
               {user ? (
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center justify-center rounded-full bg-[#4F8EF7] px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8] hover:shadow-[#4F8EF7]/40"
+                  className="inline-flex items-center justify-center rounded-full bg-[#FBBF24] px-5 py-2 text-sm font-semibold text-[#0A0A0A] shadow-lg shadow-[#FBBF24]/20 transition-all hover:bg-[#F59E0B] hover:shadow-[#FBBF24]/30"
                 >
                   My Account
                 </Link>
               ) : (
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center rounded-full bg-[#4F8EF7] px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8] hover:shadow-[#4F8EF7]/40"
+                  className="inline-flex items-center justify-center rounded-full bg-[#FBBF24] px-5 py-2 text-sm font-semibold text-[#0A0A0A] shadow-lg shadow-[#FBBF24]/20 transition-all hover:bg-[#F59E0B] hover:shadow-[#FBBF24]/30"
                 >
                   Get Started
                 </Link>
@@ -208,7 +208,7 @@ export default function Header() {
                             className="flex items-center gap-2 px-3 py-2 text-sm text-[#8B9CB6] hover:text-white rounded-lg hover:bg-[#1E2A3A] transition-colors"
                             onClick={() => setMobileOpen(false)}
                           >
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#4F8EF7]" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#FBBF24]" />
                             {sub.name}
                           </Link>
                         ))}
@@ -231,7 +231,7 @@ export default function Header() {
                 {user ? (
                   <Link
                     href="/dashboard"
-                    className="block w-full text-center rounded-full bg-[#4F8EF7] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="block w-full text-center rounded-full bg-[#FBBF24] px-4 py-2.5 text-sm font-semibold text-[#0A0A0A]"
                     onClick={() => setMobileOpen(false)}
                   >
                     My Account
@@ -239,7 +239,7 @@ export default function Header() {
                 ) : (
                   <Link
                     href="/login"
-                    className="block w-full text-center rounded-full bg-[#4F8EF7] px-4 py-2.5 text-sm font-semibold text-white"
+                    className="block w-full text-center rounded-full bg-[#FBBF24] px-4 py-2.5 text-sm font-semibold text-[#0A0A0A]"
                     onClick={() => setMobileOpen(false)}
                   >
                     Get Started

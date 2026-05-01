@@ -50,7 +50,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="relative overflow-hidden bg-[#080B14] py-28">
       {/* Glow */}
-      <div className="pointer-events-none absolute left-0 bottom-0 h-[350px] w-[350px] rounded-full bg-[#4F8EF7] opacity-[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute left-0 bottom-0 h-[350px] w-[350px] rounded-full bg-[#FBBF24] opacity-[0.04] blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -61,12 +61,12 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#0F1422] px-4 py-1.5 text-sm font-medium text-[#4F8EF7]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-1.5 text-sm font-medium text-[#FBBF24]">
             Our Portfolio
           </span>
           <h2 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
             Featured{" "}
-            <span className="bg-gradient-to-r from-[#4F8EF7] to-[#7C3AED] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FBBF24] to-[#F97316] bg-clip-text text-transparent">
               Projects
             </span>
           </h2>
@@ -85,7 +85,7 @@ export default function ProjectsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true, margin: "-40px" }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#1E2A3A] bg-[#0F1422] transition-all hover:border-[#4F8EF7]/40 hover:shadow-lg hover:shadow-[#4F8EF7]/5"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#1E2A3A] bg-[#0F1422] transition-all hover:border-[#FBBF24]/30 hover:shadow-lg hover:shadow-[#FBBF24]/5"
               >
                 {/* Image */}
                 <div className="relative h-48 w-full overflow-hidden bg-[#141928]">
@@ -112,7 +112,7 @@ export default function ProjectsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                   <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 transition-opacity group-hover:opacity-100">
                     {project.liveUrl && (
-                      <a href={project.liveUrl} className="flex h-10 w-10 items-center justify-center rounded-full bg-[#4F8EF7] text-white transition-all hover:bg-[#3B7AE8]" aria-label="View live">
+                      <a href={project.liveUrl} className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBBF24] text-[#0A0A0A] transition-all hover:bg-[#F59E0B]" aria-label="View live">
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
@@ -126,7 +126,7 @@ export default function ProjectsSection() {
 
                 {/* Info */}
                 <div className="flex flex-1 flex-col p-6">
-                  <span className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#4F8EF7]">
+                  <span className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#FBBF24]">
                     {project.category}
                   </span>
                   <h3 className="mb-2 text-lg font-bold text-white">{project.title}</h3>
@@ -162,7 +162,7 @@ export default function ProjectsSection() {
         >
           <Link
             href="/#proposal"
-            className="inline-flex items-center gap-2 rounded-full bg-[#4F8EF7] px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8] hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-[#FBBF24] px-7 py-3.5 text-base font-semibold text-[#0A0A0A] shadow-lg shadow-[#FBBF24]/20 transition-all hover:bg-[#F59E0B] hover:-translate-y-0.5"
           >
             Start Your Project
           </Link>
