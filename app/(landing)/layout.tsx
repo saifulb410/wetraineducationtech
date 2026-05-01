@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="font-sans antialiased bg-white text-gray-900 scroll-smooth">
+    <div className="font-sans antialiased bg-[#080B14] text-white scroll-smooth">
       {/* Optional top banner or announcement */}
       <DisclaimerBanner />
 

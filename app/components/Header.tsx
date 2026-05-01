@@ -1,10 +1,9 @@
-// components/Header.tsx
 "use client";
 
 import { createClient } from "@/app/utils/supabase/client";
 import { useImageError } from "@/hooks/useImageError";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,31 +15,29 @@ export default function Header() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const { handleImageError, hasError } = useImageError();
   const supabase = createClient();
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    return scrollY.on("change", (v) => setScrolled(v > 20));
+  }, [scrollY]);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
         setUser(user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
+      } catch {
       } finally {
         setLoading(false);
       }
     };
-
     getUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
-
     return () => subscription?.unsubscribe();
   }, [supabase]);
 
@@ -49,12 +46,7 @@ export default function Header() {
     { id: "about", name: "About", href: "/about", type: "link" },
     { id: "services", name: "Services", href: "/services", type: "dropdown" },
     { id: "projects", name: "Projects", href: "/#projects", type: "link" },
-    {
-      id: "certificates",
-      name: "Certificates",
-      href: "/#certificates",
-      type: "link",
-    },
+    { id: "certificates", name: "Certificates", href: "/#certificates", type: "link" },
     { id: "contact", name: "Contact", href: "/#proposal", type: "link" },
   ];
 
@@ -68,36 +60,39 @@ export default function Header() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200"
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#080B14]/90 backdrop-blur-xl border-b border-[#1E2A3A] shadow-lg shadow-black/20"
+          : "bg-transparent"
+      }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          aria-label="WeTrainEducation & Tech — Home"
-          className="font-bold text-2xl text-gray-900"
-        >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <Link href="/" aria-label="WeTrainEducation & Tech — Home">
           <motion.div
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="flex items-center gap-2"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="flex items-center gap-2.5"
           >
             {!hasError("logo") ? (
               <Image
                 src="/favicon.png"
                 alt="WeTrainEducation & Tech"
-                width={40}
-                height={40}
-                className="h-10 w-10"
+                width={38}
+                height={38}
+                className="h-9 w-9 rounded-lg"
                 priority
                 onError={() => handleImageError("logo")}
               />
             ) : (
-              <div className="h-10 w-40 bg-gradient-to-r from-yellow-500 to-orange-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                WeTrain Tech
+              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[#4F8EF7] to-[#7C3AED] flex items-center justify-center text-white font-bold text-sm">
+                W
               </div>
             )}
-            <span className="hidden sm:inline">WeTrainEducation & Tech</span>
+            <span className="hidden sm:inline font-bold text-white text-lg tracking-tight">
+              WeTrain<span className="text-[#4F8EF7]">Education</span>
+            </span>
           </motion.div>
         </Link>
 
@@ -106,73 +101,44 @@ export default function Header() {
           {navItems.map((item) => (
             <div
               key={item.id}
-              onMouseEnter={() =>
-                item.type === "dropdown" && setHovered(item.id)
-              }
+              onMouseEnter={() => item.type === "dropdown" && setHovered(item.id)}
               onMouseLeave={() => setHovered(null)}
               className="relative"
             >
               {item.type === "dropdown" ? (
-                <button className="relative flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none rounded-md transition-colors">
+                <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[#8B9CB6] hover:text-white transition-colors rounded-lg">
                   {item.name}
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${hovered === item.id ? "rotate-180" : ""}`}
-                  />
-                  {hovered === item.id && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute left-3 top-full block h-[2px] bg-gray-900"
-                      initial={{ width: 0 }}
-                      animate={{ width: "calc(100% - 1.5rem)" }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0.2,
-                        duration: 0.5,
-                      }}
-                    />
-                  )}
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${hovered === item.id ? "rotate-180" : ""}`} />
                 </button>
               ) : (
                 <Link
                   href={item.href}
-                  className="relative px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none rounded-md transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-[#8B9CB6] hover:text-white transition-colors rounded-lg block"
                   onMouseEnter={() => setHovered(item.id)}
                   onMouseLeave={() => setHovered(null)}
                 >
                   {item.name}
-                  {hovered === item.id && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute left-3 top-full block h-[2px] bg-gray-900"
-                      initial={{ width: 0 }}
-                      animate={{ width: "calc(100% - 1.5rem)" }}
-                      transition={{
-                        type: "spring",
-                        bounce: 0.2,
-                        duration: 0.5,
-                      }}
-                    />
-                  )}
                 </Link>
               )}
 
-              {/* Dropdown menu */}
+              {/* Dropdown */}
               {item.type === "dropdown" && hovered === item.id && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-0 top-full w-48 rounded-lg bg-white shadow-lg border border-gray-200 py-2 z-50"
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 top-full mt-2 w-52 rounded-xl bg-[#0F1422] border border-[#1E2A3A] shadow-xl shadow-black/40 py-2 z-50"
                 >
-                  {servicesSubmenu.map((submenu) => (
+                  {servicesSubmenu.map((sub) => (
                     <Link
-                      key={submenu.name}
-                      href={submenu.href}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-gray-900 transition-colors"
+                      key={sub.name}
+                      href={sub.href}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#8B9CB6] hover:text-white hover:bg-[#1E2A3A] transition-colors"
                       onClick={() => setMobileOpen(false)}
                     >
-                      {submenu.name}
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#4F8EF7]" />
+                      {sub.name}
                     </Link>
                   ))}
                 </motion.div>
@@ -180,47 +146,35 @@ export default function Header() {
             </div>
           ))}
 
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="ml-4"
-          >
-            {!loading && (
-              <>
-                {user ? (
-                  <Link
-                    href="/dashboard"
-                    className="inline-flex items-center justify-center rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm transition-all hover:bg-yellow-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500"
-                    aria-label="My account"
-                  >
-                    My Account
-                  </Link>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="inline-flex items-center justify-center rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-900"
-                    aria-label="Login to your account"
-                  >
-                    Login
-                  </Link>
-                )}
-              </>
-            )}
-          </motion.div>
+          {/* CTA */}
+          {!loading && (
+            <div className="ml-3">
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center justify-center rounded-full bg-[#4F8EF7] px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8] hover:shadow-[#4F8EF7]/40"
+                >
+                  My Account
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="inline-flex items-center justify-center rounded-full bg-[#4F8EF7] px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4F8EF7]/25 transition-all hover:bg-[#3B7AE8] hover:shadow-[#4F8EF7]/40"
+                >
+                  Get Started
+                </Link>
+              )}
+            </div>
+          )}
         </nav>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden rounded-lg p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-900"
+          className="md:hidden rounded-lg p-2 text-[#8B9CB6] hover:text-white hover:bg-[#1E2A3A] transition-colors"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle mobile menu"
-          aria-expanded={mobileOpen}
         >
-          {mobileOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
@@ -230,33 +184,32 @@ export default function Header() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.25 }}
-          className="md:hidden border-t border-gray-200 bg-white"
+          transition={{ duration: 0.2 }}
+          className="md:hidden border-t border-[#1E2A3A] bg-[#0F1422]"
         >
-          <div className="space-y-1 px-4 py-3">
+          <div className="space-y-1 px-4 py-4">
             {navItems.map((item) => (
               <div key={item.id}>
                 {item.type === "dropdown" ? (
                   <>
                     <button
                       onClick={() => setServicesOpen(!servicesOpen)}
-                      className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                      className="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-[#8B9CB6] hover:text-white rounded-lg hover:bg-[#1E2A3A] transition-colors"
                     >
                       {item.name}
-                      <ChevronDown
-                        className={`h-4 w-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
-                      />
+                      <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
                     </button>
                     {servicesOpen && (
-                      <div className="ml-4 space-y-1">
-                        {servicesSubmenu.map((submenu) => (
+                      <div className="ml-3 mt-1 space-y-1">
+                        {servicesSubmenu.map((sub) => (
                           <Link
-                            key={submenu.name}
-                            href={submenu.href}
-                            className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-yellow-50 hover:text-gray-900"
+                            key={sub.name}
+                            href={sub.href}
+                            className="flex items-center gap-2 px-3 py-2 text-sm text-[#8B9CB6] hover:text-white rounded-lg hover:bg-[#1E2A3A] transition-colors"
                             onClick={() => setMobileOpen(false)}
                           >
-                            {submenu.name}
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#4F8EF7]" />
+                            {sub.name}
                           </Link>
                         ))}
                       </div>
@@ -265,7 +218,7 @@ export default function Header() {
                 ) : (
                   <Link
                     href={item.href}
-                    className="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#8B9CB6] hover:text-white rounded-lg hover:bg-[#1E2A3A] transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
                     {item.name}
@@ -274,11 +227,11 @@ export default function Header() {
               </div>
             ))}
             {!loading && (
-              <>
+              <div className="pt-2">
                 {user ? (
                   <Link
                     href="/dashboard"
-                    className="mt-2 block rounded-lg bg-yellow-500 px-4 py-2.5 text-center text-sm font-semibold text-gray-900 hover:bg-yellow-600"
+                    className="block w-full text-center rounded-full bg-[#4F8EF7] px-4 py-2.5 text-sm font-semibold text-white"
                     onClick={() => setMobileOpen(false)}
                   >
                     My Account
@@ -286,13 +239,13 @@ export default function Header() {
                 ) : (
                   <Link
                     href="/login"
-                    className="mt-2 block rounded-lg bg-gray-900 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-gray-800"
+                    className="block w-full text-center rounded-full bg-[#4F8EF7] px-4 py-2.5 text-sm font-semibold text-white"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Login
+                    Get Started
                   </Link>
                 )}
-              </>
+              </div>
             )}
           </div>
         </motion.div>

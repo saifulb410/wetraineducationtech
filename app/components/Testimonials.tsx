@@ -1,4 +1,3 @@
-// components/Testimonials.tsx
 "use client";
 
 import { createClient } from "@/app/utils/supabase/client";
@@ -8,21 +7,21 @@ import { Clock, Star, TrendingUp, Users } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+const stats = [
+  { value: "4.9/5", label: "Client Rating", icon: Star },
+  { value: "98%", label: "Retention Rate", icon: TrendingUp },
+  { value: "24–48 hrs", label: "Avg. Response Time", icon: Clock },
+  { value: "1,000+", label: "Projects Delivered", icon: Users },
+];
+
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<
-    {
-      name: string;
-      role: string;
-      text: string;
-      avatar: string;
-      achievement: string;
-      rating: number;
-    }[]
-  >([]);
+  const [testimonials, setTestimonials] = useState<{
+    name: string; role: string; text: string; avatar: string; achievement: string; rating: number;
+  }[]>([]);
   const { handleImageError, hasError } = useImageError();
 
   useEffect(() => {
-    const loadStories = async () => {
+    const load = async () => {
       const supabase = createClient();
       const { data } = await supabase
         .from("client_stories")
@@ -30,182 +29,132 @@ export default function Testimonials() {
         .order("created_at", { ascending: false });
 
       if (data && data.length > 0) {
-        const mapped = data.map((story) => ({
-          name: story.name ?? "",
-          role: story.role ?? "",
-          text: story.quote ?? "",
-          avatar: story.image_url ?? "",
-          achievement: story.achievement ?? "",
-          rating: Number(story.rating ?? 5),
-        }));
-        setTestimonials(mapped);
+        setTestimonials(data.map((s) => ({
+          name: s.name ?? "",
+          role: s.role ?? "",
+          text: s.quote ?? "",
+          avatar: s.image_url ?? "",
+          achievement: s.achievement ?? "",
+          rating: Number(s.rating ?? 5),
+        })));
       }
     };
-
-    loadStories();
+    load();
   }, []);
 
-  const stats = [
-    { value: "4.9/5", label: "Client Rating", icon: Star },
-    { value: "98%", label: "Retention Rate", icon: TrendingUp },
-    { value: "24–48 hrs", label: "Avg. Response Time", icon: Clock },
-    { value: "1,000+", label: "Projects Delivered", icon: Users },
-  ];
-
   return (
-    <section
-      id="testimonials"
-      className="relative overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 py-24"
-      aria-labelledby="testimonials-heading"
-    >
-      {/* Background accents */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-0 top-0 h-full w-full bg-[url('/wireframe.png')] opacity-10" />
-        <div className="absolute left-1/4 top-1/4 h-60 w-60 rounded-full bg-[var(--primary-yellow)] opacity-10 blur-[100px]" />
-        <div className="absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-[var(--secondary-yellow)] opacity-10 blur-[100px]" />
-      </div>
+    <section id="testimonials" className="relative overflow-hidden bg-[#0F1422] py-28">
+      {/* Glow */}
+      <div className="pointer-events-none absolute right-1/4 top-1/4 h-[350px] w-[350px] rounded-full bg-[#7C3AED] opacity-[0.05] blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-[var(--primary-yellow)]/10 px-4 py-2 text-sm font-medium text-[var(--primary-yellow)]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] bg-[#080B14] px-4 py-1.5 text-sm font-medium text-[#4F8EF7]">
             Client Stories
           </span>
-          <h2
-            id="testimonials-heading"
-            className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl"
-          >
+          <h2 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
             Trusted by{" "}
-            <span className="text-[var(--primary-yellow)]">global brands</span>
+            <span className="bg-gradient-to-r from-[#4F8EF7] to-[#7C3AED] bg-clip-text text-transparent">
+              Global Brands
+            </span>
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-gray-600">
-            Real outcomes from real partnerships—strategy, creative, and
-            performance working together to drive growth.
+          <p className="mx-auto max-w-2xl text-lg text-[#8B9CB6]">
+            Real outcomes from real partnerships — strategy, creative, and performance working together.
           </p>
         </motion.div>
 
         {/* Testimonials */}
         {testimonials.length > 0 ? (
-          <div className="mb-20 grid grid-cols-1 gap-8 md:grid-cols-3">
-            {testimonials.map((t, idx) => (
+          <div className="mb-16 grid grid-cols-1 gap-5 md:grid-cols-3">
+            {testimonials.map((t, i) => (
               <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 40 }}
+                key={i}
+                initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                whileHover={{ y: -5 }}
-                className="flex h-full flex-col rounded-xl border border-gray-100 bg-white p-8 transition-all hover:shadow-lg"
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                whileHover={{ y: -4 }}
+                className="flex flex-col rounded-2xl border border-[#1E2A3A] bg-[#080B14] p-7 transition-all hover:border-[#4F8EF7]/30"
               >
-                <div className="mb-4 flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-5 w-5 ${
-                        i < t.rating
-                          ? "text-[var(--primary-yellow)] fill-[var(--primary-yellow)]"
-                          : "text-gray-300"
-                      }`}
-                      aria-hidden="true"
-                    />
+                {/* Stars */}
+                <div className="mb-4 flex gap-0.5">
+                  {[...Array(5)].map((_, si) => (
+                    <Star key={si} className={`h-4 w-4 ${si < t.rating ? "fill-[#F59E0B] text-[#F59E0B]" : "text-[#1E2A3A]"}`} />
                   ))}
                 </div>
 
-                <p className="mb-6 flex-grow italic text-gray-600">
+                <p className="mb-6 flex-1 text-sm leading-relaxed text-[#8B9CB6]">
                   &quot;{t.text}&quot;
                 </p>
 
-                <div className="flex items-center">
+                <div className="flex items-center gap-3">
                   {t.avatar && !hasError(`avatar-${t.name}`) ? (
                     <Image
                       src={t.avatar}
-                      alt={`${t.name} — ${t.role}`}
-                      height={48}
-                      width={48}
-                      className="mr-4 h-12 w-12 rounded-full border-2 border-[var(--primary-yellow)] object-cover"
+                      alt={t.name}
+                      height={44}
+                      width={44}
+                      className="h-11 w-11 rounded-full border border-[#1E2A3A] object-cover"
                       onError={() => handleImageError(`avatar-${t.name}`)}
                     />
                   ) : (
-                    <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--primary-yellow)]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1E2A3A] bg-[#141928] text-sm font-bold text-[#4F8EF7]">
                       {t.avatar && hasError(`avatar-${t.name}`) ? (
-                        <Image
-                          src={getPlaceholderImage("person")}
-                          alt="Placeholder"
-                          height={48}
-                          width={48}
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
+                        <Image src={getPlaceholderImage("person")} alt="Placeholder" height={44} width={44} className="rounded-full object-cover" />
                       ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--tertiary-yellow)] text-sm font-semibold text-[var(--primary-yellow)]">
-                          {t.name
-                            .split(" ")
-                            .map((part) => part[0])
-                            .slice(0, 2)
-                            .join("")}
-                        </div>
+                        t.name.split(" ").map((p) => p[0]).slice(0, 2).join("")
                       )}
                     </div>
                   )}
                   <div>
-                    <h4 className="font-bold text-gray-900">{t.name}</h4>
-                    <p className="text-sm text-gray-500">{t.role}</p>
+                    <p className="text-sm font-bold text-white">{t.name}</p>
+                    <p className="text-xs text-[#8B9CB6]">{t.role}</p>
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-lg bg-[var(--tertiary-yellow)] p-3 text-center">
-                  <p className="text-sm text-gray-600">Result</p>
-                  <p className="text-xl font-bold text-[var(--primary-yellow)]">
-                    {t.achievement}
-                  </p>
-                </div>
+                {t.achievement && (
+                  <div className="mt-4 rounded-xl border border-[#4F8EF7]/20 bg-[#4F8EF7]/5 p-3 text-center">
+                    <p className="text-xs text-[#8B9CB6]">Result</p>
+                    <p className="text-sm font-bold text-[#4F8EF7]">{t.achievement}</p>
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
         ) : (
-          <div className="mb-20 min-h-96 flex flex-col items-center justify-center text-center py-20">
-            <div className="text-6xl mb-6">💬</div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-3">
-              Coming Soon
-            </h3>
-            <p className="text-xl text-gray-600 max-w-2xl">
-              We&apos;re collecting client testimonials and success stories.
-              Check back soon to hear from our happy clients!
-            </p>
+          <div className="mb-16 flex min-h-60 flex-col items-center justify-center py-16 text-center">
+            <div className="mb-4 text-5xl">💬</div>
+            <h3 className="mb-2 text-2xl font-bold text-white">Coming Soon</h3>
+            <p className="text-[#8B9CB6]">Client testimonials and success stories are on their way.</p>
           </div>
         )}
 
         {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="rounded-xl border border-gray-100 bg-white p-8 shadow-sm"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-2 gap-4 rounded-2xl border border-[#1E2A3A] bg-[#080B14] p-8 md:grid-cols-4"
         >
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="mb-3 flex justify-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary-yellow)]/10 text-[var(--primary-yellow)]">
-                      <Icon className="h-6 w-6" aria-hidden="true" />
-                    </div>
-                  </div>
-                  <div className="mb-1 text-3xl font-bold text-gray-900">
-                    {stat.value}
-                  </div>
-                  <div className="text-gray-600">{stat.label}</div>
+          {stats.map((s, i) => (
+            <div key={i} className="text-center">
+              <div className="mb-3 flex justify-center">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4F8EF7]/10 text-[#4F8EF7]">
+                  <s.icon className="h-5 w-5" />
                 </div>
-              );
-            })}
-          </div>
+              </div>
+              <div className="mb-1 text-3xl font-extrabold text-white">{s.value}</div>
+              <div className="text-sm text-[#8B9CB6]">{s.label}</div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

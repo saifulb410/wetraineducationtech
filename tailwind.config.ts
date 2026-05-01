@@ -72,9 +72,9 @@ export default {
         "4xl": "var(--radius-4xl)",
       },
       fontFamily: {
-        sans: ["Baloo Da 2", "sans-serif"],
+        sans: ["Plus Jakarta Sans", "sans-serif"],
         mono: ["Monaco", "monospace"],
-        heading: ["Baloo Da 2", "sans-serif"],
+        heading: ["Plus Jakarta Sans", "sans-serif"],
       },
     },
   },
