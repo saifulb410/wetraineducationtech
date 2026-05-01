@@ -45,7 +45,7 @@ export default function LiveChat() {
       id="tawk-to"
       strategy="afterInteractive"
       src={`https://embed.tawk.to/${TAWK_PROPERTY_ID}/${TAWK_WIDGET_ID}`}
-      crossOrigin="*"
+      crossOrigin="anonymous"
     />
   );
 }
