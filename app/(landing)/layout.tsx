@@ -1,7 +1,7 @@
-// app/layout.tsx
 import DisclaimerBanner from "@/app/components/DisclaimerBanner";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import LiveChat from "@/app/components/LiveChat";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 
 export default function RootLayout({
@@ -25,6 +25,9 @@ export default function RootLayout({
 
       {/* Fixed WhatsApp Button */}
       <WhatsAppButton />
+
+      {/* Live chat widget (Tawk.to) */}
+      <LiveChat />
     </div>
   );
 }
