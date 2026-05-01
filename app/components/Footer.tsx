@@ -201,10 +201,8 @@ export default function Footer() {
             ))}
           </div>
           <p className="text-xs text-[#8B9CB6]">
-            Developed by{" "}
-            <a href="https://ahsandevhub.com" target="_blank" rel="noopener noreferrer" className="text-[#FBBF24] hover:underline">
-              Ahsan Habib
-            </a>
+            Built by{" "}
+            <span className="text-[#FBBF24]">WTE Tech Team</span>
           </p>
         </div>
       </div>
