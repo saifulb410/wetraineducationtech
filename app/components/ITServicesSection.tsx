@@ -1,10 +1,10 @@
-// components/ITServicesSection.tsx
 "use client";
 
 import { createClient } from "@/app/utils/supabase/client";
 import { formatServiceCurrency, getServicePricing } from "@/app/utils/services/pricing";
 import ServiceCard, { ServiceCardSkeleton } from "@/components/shared/ServiceCard";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -13,13 +13,11 @@ interface ITService {
   slug: string;
   title: string;
   description: string;
-  icon?: React.ReactNode;
   imageUrl?: string;
   features: string[];
   price: string;
   originalPrice: string | null;
   priceNote: string;
-  popular?: boolean;
 }
 
 export default function ITServicesSection() {
@@ -30,9 +28,7 @@ export default function ITServicesSection() {
   useEffect(() => {
     const loadData = async () => {
       const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
 
       if (user) {
         const { data: profile } = await supabase
@@ -40,22 +36,17 @@ export default function ITServicesSection() {
           .select("role")
           .eq("id", user.id)
           .single();
-
-        if (profile?.role === "admin") {
-          setIsAdmin(true);
-        }
+        if (profile?.role === "admin") setIsAdmin(true);
       }
 
       const { data } = await supabase
         .from("services")
-        .select(
-          "id, slug, title, details, key_features, featured_image_url, price, discount, currency",
-        )
+        .select("id, slug, title, details, key_features, featured_image_url, price, discount, currency")
         .eq("category", "software")
         .order("created_at", { ascending: false });
 
       if (data && data.length > 0) {
-        const mapped: ITService[] = data.map((service) => {
+        setServices(data.map((service) => {
           const pricing = getServicePricing(
             service.price === null ? null : Number(service.price),
             service.discount === null ? null : Number(service.discount),
@@ -65,95 +56,69 @@ export default function ITServicesSection() {
             slug: service.slug as string,
             title: service.title ?? "",
             description: service.details ?? "",
-            features: Array.isArray(service.key_features)
-              ? service.key_features
-              : [],
-            price: formatServiceCurrency(
-              pricing.discountedPrice,
-              service.currency ?? "BDT",
-            ),
+            features: Array.isArray(service.key_features) ? service.key_features : [],
+            price: formatServiceCurrency(pricing.discountedPrice, service.currency ?? "BDT"),
             originalPrice: pricing.hasDiscount
-              ? formatServiceCurrency(
-                  pricing.originalPrice,
-                  service.currency ?? "BDT",
-                )
+              ? formatServiceCurrency(pricing.originalPrice, service.currency ?? "BDT")
               : null,
             priceNote: pricing.hasDiscount
               ? `Save ৳${pricing.savingsAmount} • ${pricing.savingsPercent}% off`
               : "",
             imageUrl: service.featured_image_url ?? undefined,
-            popular: false,
           };
-        });
-        setServices(mapped);
+        }));
       }
       setLoading(false);
     };
-
     loadData();
   }, []);
 
   return (
-    <section
-      id="it-services"
-      className="relative overflow-hidden bg-white py-24"
-      aria-labelledby="it-services-heading"
-    >
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute left-0 top-0 h-full w-full bg-[url('/wireframe.png')] opacity-5" />
-        <div className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-yellow-400 opacity-5 blur-3xl" />
-        <div className="absolute -left-40 bottom-40 h-96 w-96 rounded-full bg-orange-400 opacity-5 blur-3xl" />
-      </div>
+    <section id="it-services" className="relative overflow-hidden bg-[#0F1422] py-28">
+      {/* Glow */}
+      <div className="pointer-events-none absolute -right-40 top-1/4 h-[350px] w-[350px] rounded-full bg-[#FBBF24] opacity-[0.04] blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-600">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-1.5 text-sm font-medium text-[#FBBF24]">
             IT Services & Software
           </span>
-          <h2
-            id="it-services-heading"
-            className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl"
-          >
+          <h2 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">
             Enterprise{" "}
-            <span className="text-yellow-600">Software Solutions</span>
+            <span className="bg-gradient-to-r from-[#FBBF24] to-[#F97316] bg-clip-text text-transparent">
+              Software Solutions
+            </span>
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600">
-            Custom software development tailored to your business needs. From
-            school management to e-commerce, we build solutions that scale.
+          <p className="mx-auto max-w-2xl text-lg text-[#8B9CB6]">
+            Custom software development tailored to your needs — school management, e-commerce, POS systems, and more.
           </p>
         </motion.div>
 
         {/* Services Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <motion.div
-                key={`software-skeleton-${index}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-              >
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                 <ServiceCardSkeleton />
               </motion.div>
             ))}
           </div>
         ) : services.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {services.slice(0, 3).map((service, index) => (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {services.slice(0, 3).map((service, i) => (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true, margin: "-40px" }}
                 className="h-full"
               >
                 <ServiceCard
@@ -163,20 +128,10 @@ export default function ITServicesSection() {
                   features={service.features}
                   imageUrl={service.imageUrl}
                   categoryLabel="Software"
-                  categoryClassName="bg-purple-100 text-purple-800 hover:bg-purple-100"
+                  categoryClassName="bg-amber-500/10 text-amber-400"
                   detailHref={`/software/${service.slug}`}
-                  ctaHref={
-                    isAdmin
-                      ? undefined
-                      : service.id === "custom-software"
-                        ? "/#proposal"
-                        : `/software/${service.slug}`
-                  }
-                  ctaLabel={
-                    service.id === "custom-software"
-                      ? "Request Quote"
-                      : "Purchase Now"
-                  }
+                  ctaHref={isAdmin ? undefined : service.id === "custom-software" ? "/#proposal" : `/software/${service.slug}`}
+                  ctaLabel={service.id === "custom-software" ? "Request Quote" : "Purchase Now"}
                   ctaDisabled={isAdmin}
                   ctaTitle={isAdmin ? "Admins cannot purchase" : undefined}
                   priceLabel={service.price}
@@ -187,45 +142,37 @@ export default function ITServicesSection() {
             ))}
           </div>
         ) : (
-          <div className="min-h-96 flex flex-col items-center justify-center text-center py-20">
-            <div className="text-6xl mb-6">💻</div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-3">
-              Coming Soon
-            </h3>
-            <p className="text-xl text-gray-600 max-w-2xl">
-              We&apos;re building amazing software solutions for you. Stay
-              tuned!
-            </p>
+          <div className="flex min-h-72 flex-col items-center justify-center py-20 text-center">
+            <div className="mb-4 text-5xl">💻</div>
+            <h3 className="mb-2 text-2xl font-bold text-white">Coming Soon</h3>
+            <p className="text-[#8B9CB6]">Amazing software solutions are being built for you.</p>
           </div>
         )}
 
-        {/* Bottom Info */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-16 rounded-2xl border border-yellow-200 bg-gradient-to-r from-yellow-50 to-orange-50 p-8 text-center space-y-6"
+          className="mt-14 flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#1E2A3A] bg-[#080B14] p-8 sm:flex-row"
         >
-          {services.length > 3 && (
-            <Link
-              href="/software"
-              className="inline-block rounded-xl bg-yellow-600 px-8 py-3 font-bold text-white transition-all hover:bg-yellow-700 hover:shadow-lg"
-            >
-              View All IT Services
-            </Link>
-          )}
           <div>
-            <h3 className="mb-3 text-2xl font-bold text-gray-900">
-              Need a Custom Solution?
-            </h3>
-            <p className="mb-6 text-lg text-gray-600">
-              Every business is unique. Let&apos;s discuss your specific
-              requirements and build the perfect solution.
-            </p>
+            <h3 className="mb-1 text-xl font-bold text-white">Need a Custom Solution?</h3>
+            <p className="text-sm text-[#8B9CB6]">Every business is unique. Let's discuss your requirements and build the perfect software.</p>
+          </div>
+          <div className="flex shrink-0 gap-3">
+            {services.length > 3 && (
+              <Link
+                href="/software"
+                className="inline-flex items-center gap-2 rounded-full bg-[#FBBF24] px-6 py-2.5 text-sm font-semibold text-[#0A0A0A] transition-all hover:bg-[#F59E0B]"
+              >
+                All IT Services <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
             <Link
               href="/#proposal"
-              className="inline-block rounded-xl border border-yellow-400 bg-white px-8 py-3 font-bold text-yellow-600 transition-all hover:bg-yellow-50 hover:shadow-lg"
+              className="inline-flex items-center gap-2 rounded-full border border-[#1E2A3A] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:border-[#FBBF24]/40"
             >
               Schedule Consultation
             </Link>

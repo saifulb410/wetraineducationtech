@@ -1,16 +1,7 @@
-// components/Footer.tsx
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  Youtube,
-} from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,43 +10,15 @@ import { useContactInfo } from "../utils/contactInfo";
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const { contactPhone, supportEmail } = useContactInfo();
-
-  const quickLinks = [
-    { name: "About", href: "/about" },
-    { name: "Services", href: "/#services" },
-    { name: "Projects", href: "/#projects" },
-    { name: "Terms of Use", href: "/terms" },
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Refund Policy", href: "/refund" },
-  ];
-
-  const contactInfo = [
-    { icon: Mail, text: supportEmail },
-    { icon: Phone, text: contactPhone },
-    {
-      icon: MapPin,
-      text: "Usha-Tara Kunju, 1 no. C&B Pole, C&B Road, Barishal Sadar, Barishal",
-    },
-  ];
-
-  const socialLinks = [
-    { icon: Facebook, href: "#" },
-    { icon: Instagram, href: "#" },
-    { icon: Linkedin, href: "#" },
-    { icon: Youtube, href: "#" },
-  ];
-
-  const [newsletterStatus, setNewsletterStatus] = useState<string>("");
-  const [newsletterLoading, setNewsletterLoading] = useState<boolean>(false);
+  const [newsletterStatus, setNewsletterStatus] = useState("");
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setNewsletterStatus("");
     setNewsletterLoading(true);
     const form = e.currentTarget;
-    const email = (
-      form.elements.namedItem("newsletterEmail") as HTMLInputElement
-    )?.value;
+    const email = (form.elements.namedItem("newsletterEmail") as HTMLInputElement)?.value;
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
@@ -64,14 +27,10 @@ export default function Footer() {
       });
       const data = await res.json();
       if (res.ok) {
-        setNewsletterStatus(
-          "Thank you for subscribing! Please check your email for confirmation.",
-        );
+        setNewsletterStatus("Subscribed! Check your inbox for confirmation.");
         form.reset();
       } else {
-        setNewsletterStatus(
-          data.error || "Subscription failed. Please try again.",
-        );
+        setNewsletterStatus(data.error || "Subscription failed. Please try again.");
       }
     } catch {
       setNewsletterStatus("Subscription failed. Please try again.");
@@ -80,159 +39,172 @@ export default function Footer() {
     }
   };
 
+  const quickLinks = [
+    { name: "About Us", href: "/about" },
+    { name: "Services", href: "/#services" },
+    { name: "Courses", href: "/courses" },
+    { name: "Projects", href: "/#projects" },
+    { name: "Certificates", href: "/#certificates" },
+    { name: "Contact", href: "/#proposal" },
+  ];
+
+  const legalLinks = [
+    { name: "Terms of Use", href: "/terms" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Refund Policy", href: "/refund" },
+  ];
+
+  const services = [
+    { name: "IT Services", href: "/software" },
+    { name: "Marketing Services", href: "/marketing" },
+    { name: "WhatsApp Business", href: "/marketing" },
+    { name: "Bulk SMS", href: "/marketing" },
+    { name: "WeSend Delivery", href: "/#services" },
+    { name: "Leadpilot CRM", href: "/#services" },
+  ];
+
+  const socialLinks = [
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Youtube, href: "#", label: "YouTube" },
+  ];
+
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-12 sm:px-6 md:grid-cols-4 lg:px-8">
-        {/* Brand */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-1">
-            <Image
-              src="/favicon.png"
-              alt="WeTrain Marketing"
-              width={48}
-              height={48}
-              className="h-12 w-12"
-              priority
-            />
-            <span className="font-bold text-2xl leading-none text-white">
-              WeTrainEducation <br /> & Tech
-            </span>
-          </div>
-          <p className="text-sm leading-6">
-            WeTrain Education & Tech is a global marketing and IT company
-            delivering brand strategy, creative campaigns, and growth solutions
-            for businesses worldwide.
-          </p>
-          <div className="flex gap-4">
-            {socialLinks.map((s, i) => (
-              <motion.a
-                key={i}
-                href={s.href}
-                whileHover={{ y: -3 }}
-                className="text-gray-400 transition-colors hover:text-white"
-                aria-label={`Visit our ${s.icon.name} page`}
-              >
-                <s.icon className="h-5 w-5" />
-              </motion.a>
-            ))}
-          </div>
-        </div>
+    <footer className="border-t border-[#1E2A3A] bg-[#080B14]">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
 
-        {/* Links */}
-        <div>
-          <h3 className="mb-4 text-lg font-bold text-white">Quick Links</h3>
-          <ul className="space-y-3">
-            {quickLinks.map((l, i) => (
-              <motion.li key={i} whileHover={{ x: 5 }}>
-                {l.href.startsWith("#") ? (
-                  <Link
-                    href={l.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {l.name}
-                  </Link>
-                ) : (
-                  <Link
-                    href={l.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {l.name}
-                  </Link>
-                )}
-              </motion.li>
-            ))}
-          </ul>
-        </div>
+          {/* Brand — spans 2 cols on large screens */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="mb-5 inline-flex items-center gap-2.5">
+              <Image src="/favicon.png" alt="WeTrainEducation & Tech" width={36} height={36} className="h-9 w-9 rounded-lg" />
+              <span className="text-lg font-bold text-white">
+                WeTrain<span className="text-[#FBBF24]">Education</span>
+              </span>
+            </Link>
+            <p className="mb-6 max-w-xs text-sm leading-relaxed text-[#8B9CB6]">
+              A global education and IT company delivering courses, software, marketing, and growth solutions for businesses worldwide.
+            </p>
 
-        {/* Contact */}
-        <div>
-          <h3 className="mb-4 text-lg font-bold text-white">Contact</h3>
-          <ul className="space-y-3">
-            {contactInfo.map((info, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <info.icon className="h-5 w-5 flex-shrink-0 text-white" />
-                <span className="text-sm">{info.text}</span>
-              </li>
-            ))}
-          </ul>
+            {/* Social */}
+            <div className="mb-6 flex gap-3">
+              {socialLinks.map((s) => (
+                <motion.a
+                  key={s.label}
+                  href={s.href}
+                  whileHover={{ y: -3 }}
+                  aria-label={s.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#1E2A3A] bg-[#0F1422] text-[#8B9CB6] transition-colors hover:border-[#FBBF24]/30 hover:text-[#FBBF24]"
+                >
+                  <s.icon className="h-4 w-4" />
+                </motion.a>
+              ))}
+            </div>
 
-          {/* Payment Partners */}
-          <div className="mt-8">
-            <h3 className="mb-4 text-lg font-bold text-white">
-              Payment Partners
-            </h3>
-            <div className="flex flex-wrap gap-3 items-center">
-              <div className="bg-pink-600 text-white px-3 py-1 rounded text-sm font-bold">
-                bKash
-              </div>
-              <div className="bg-orange-500 text-white px-3 py-1 rounded text-sm font-bold">
-                Nagad
-              </div>
-              <div className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">
-                Bank Transfer
+            {/* Payment badges */}
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#8B9CB6]">Accepted Payments</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-lg border border-[#1E2A3A] bg-pink-600/10 px-3 py-1 text-xs font-bold text-pink-400">bKash</span>
+                <span className="rounded-lg border border-[#1E2A3A] bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400">Nagad</span>
+                <span className="rounded-lg border border-[#1E2A3A] bg-blue-600/10 px-3 py-1 text-xs font-bold text-blue-400">Bank Transfer</span>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Newsletter */}
-        <div>
-          <h3 className="mb-4 text-lg font-bold text-white">Newsletter</h3>
-          <p className="mb-4 text-sm">
-            Get fresh marketing insights, case studies, and exclusive
-            resources—straight to your inbox.
-          </p>
-          <form onSubmit={handleSubscribe} className="flex">
-            <input
-              type="email"
-              name="newsletterEmail"
-              required
-              placeholder="Your email"
-              className="w-full rounded-l-lg bg-slate-50 px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              aria-label="Email address"
-            />
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              type="submit"
-              disabled={newsletterLoading}
-              className="rounded-r-lg bg-yellow-400 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-500"
-              aria-label="Subscribe to newsletter"
-            >
-              {newsletterLoading ? "Subscribing..." : "Subscribe"}
-            </motion.button>
-          </form>
-          {newsletterStatus && (
-            <p
-              className={`mt-2 text-sm ${
-                newsletterStatus.startsWith("Thank")
-                  ? "text-green-400"
-                  : "text-red-400"
-              }`}
-            >
-              {newsletterStatus}
-            </p>
-          )}
+          {/* Quick Links */}
+          <div>
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">Quick Links</h3>
+            <ul className="space-y-3">
+              {quickLinks.map((l) => (
+                <li key={l.name}>
+                  <Link href={l.href} className="text-sm text-[#8B9CB6] transition-colors hover:text-[#FBBF24]">
+                    {l.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">Services</h3>
+            <ul className="space-y-3">
+              {services.map((s) => (
+                <li key={s.name}>
+                  <Link href={s.href} className="text-sm text-[#8B9CB6] transition-colors hover:text-[#FBBF24]">
+                    {s.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact + Newsletter */}
+          <div>
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">Contact</h3>
+            <ul className="mb-6 space-y-3">
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#FBBF24]" />
+                <span className="text-sm text-[#8B9CB6]">{supportEmail}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#FBBF24]" />
+                <span className="text-sm text-[#8B9CB6]">{contactPhone}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#FBBF24]" />
+                <span className="text-sm text-[#8B9CB6]">Usha-Tara Kunju, C&B Road, Barishal, Bangladesh</span>
+              </li>
+            </ul>
+
+            {/* Newsletter */}
+            <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-white">Newsletter</h3>
+            <p className="mb-3 text-xs text-[#8B9CB6]">Get insights and resources delivered to your inbox.</p>
+            <form onSubmit={handleSubscribe} className="flex">
+              <input
+                type="email"
+                name="newsletterEmail"
+                required
+                placeholder="Your email"
+                className="w-full rounded-l-lg border border-[#1E2A3A] bg-[#0F1422] px-3 py-2 text-sm text-white placeholder-[#8B9CB6] focus:border-[#FBBF24]/40 focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={newsletterLoading}
+                className="rounded-r-lg bg-[#FBBF24] px-4 py-2 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-[#F59E0B] disabled:opacity-60"
+              >
+                {newsletterLoading ? "..." : "Go"}
+              </button>
+            </form>
+            {newsletterStatus && (
+              <p className={`mt-2 text-xs ${newsletterStatus.startsWith("Subscribed") ? "text-green-400" : "text-red-400"}`}>
+                {newsletterStatus}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-gray-800 py-6">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between px-4 sm:px-6 md:flex-row lg:px-8">
-          <p className="text-sm">
-            &copy; {currentYear} WeTrain Marketing. All rights reserved.
+      <div className="border-t border-[#1E2A3A]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 sm:px-6 md:flex-row lg:px-8">
+          <p className="text-xs text-[#8B9CB6]">
+            &copy; {currentYear} WeTrainEducation & Tech. All rights reserved.
           </p>
-          <p className="mt-2 text-sm md:mt-0">
+          <div className="flex gap-4">
+            {legalLinks.map((l) => (
+              <Link key={l.name} href={l.href} className="text-xs text-[#8B9CB6] transition-colors hover:text-[#FBBF24]">
+                {l.name}
+              </Link>
+            ))}
+          </div>
+          <p className="text-xs text-[#8B9CB6]">
             Developed by{" "}
-            <motion.a
-              href="https://ahsandevhub.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ color: "#ffffff" }}
-              className="underline decoration-gray-600 underline-offset-4 hover:decoration-white"
-            >
+            <a href="https://ahsandevhub.com" target="_blank" rel="noopener noreferrer" className="text-[#FBBF24] hover:underline">
               Ahsan Habib
-            </motion.a>
+            </a>
           </p>
         </div>
       </div>
