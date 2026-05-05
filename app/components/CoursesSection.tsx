@@ -32,49 +32,54 @@ export default function CoursesSection() {
 
   useEffect(() => {
     const loadData = async () => {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
 
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", user.id)
-          .single();
-        if (profile?.role === "admin") setIsAdmin(true);
+        if (user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .single();
+          if (profile?.role === "admin") setIsAdmin(true);
+        }
+
+        const { data } = await supabase
+          .from("services")
+          .select("id, slug, title, details, key_features, featured_image_url, price, discount, currency")
+          .eq("category", "course")
+          .order("created_at", { ascending: false });
+
+        if (data && data.length > 0) {
+          const mapped: Course[] = data.map((service) => {
+            const pricing = getServicePricing(
+              service.price === null ? null : Number(service.price),
+              service.discount === null ? null : Number(service.discount),
+            );
+            return {
+              id: service.id as string,
+              slug: service.slug as string,
+              title: service.title ?? "",
+              description: service.details ?? "",
+              price: formatServiceCurrency(pricing.discountedPrice, service.currency ?? "BDT"),
+              originalPrice: pricing.hasDiscount
+                ? formatServiceCurrency(pricing.originalPrice, service.currency ?? "BDT")
+                : null,
+              priceNote: pricing.hasDiscount
+                ? `Save ৳${pricing.savingsAmount} • ${pricing.savingsPercent}% off`
+                : "",
+              imageUrl: service.featured_image_url ?? undefined,
+              features: Array.isArray(service.key_features) ? service.key_features : [],
+            };
+          });
+          setCourses(mapped);
+        }
+      } catch {
+        // Supabase unavailable (e.g. placeholder credentials) — show empty state
+      } finally {
+        setLoading(false);
       }
-
-      const { data } = await supabase
-        .from("services")
-        .select("id, slug, title, details, key_features, featured_image_url, price, discount, currency")
-        .eq("category", "course")
-        .order("created_at", { ascending: false });
-
-      if (data && data.length > 0) {
-        const mapped: Course[] = data.map((service) => {
-          const pricing = getServicePricing(
-            service.price === null ? null : Number(service.price),
-            service.discount === null ? null : Number(service.discount),
-          );
-          return {
-            id: service.id as string,
-            slug: service.slug as string,
-            title: service.title ?? "",
-            description: service.details ?? "",
-            price: formatServiceCurrency(pricing.discountedPrice, service.currency ?? "BDT"),
-            originalPrice: pricing.hasDiscount
-              ? formatServiceCurrency(pricing.originalPrice, service.currency ?? "BDT")
-              : null,
-            priceNote: pricing.hasDiscount
-              ? `Save ৳${pricing.savingsAmount} • ${pricing.savingsPercent}% off`
-              : "",
-            imageUrl: service.featured_image_url ?? undefined,
-            features: Array.isArray(service.key_features) ? service.key_features : [],
-          };
-        });
-        setCourses(mapped);
-      }
-      setLoading(false);
     };
     loadData();
   }, []);
