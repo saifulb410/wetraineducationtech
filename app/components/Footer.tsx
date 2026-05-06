@@ -104,11 +104,46 @@ export default function Footer() {
 
             {/* Payment badges */}
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#8B9CB6]">Accepted Payments</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#8B9CB6]">Accepted Payments</p>
               <div className="flex flex-wrap gap-2">
-                <span className="rounded-lg border border-[#1E2A3A] bg-pink-600/10 px-3 py-1 text-xs font-bold text-pink-400">bKash</span>
-                <span className="rounded-lg border border-[#1E2A3A] bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400">Nagad</span>
-                <span className="rounded-lg border border-[#1E2A3A] bg-blue-600/10 px-3 py-1 text-xs font-bold text-blue-400">Bank Transfer</span>
+                {/* bKash */}
+                <div className="flex items-center gap-1.5 rounded-lg border border-[#1E2A3A] bg-[#0F1422] px-3 py-2">
+                  <svg width="16" height="16" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <circle cx="16" cy="16" r="16" fill="#E2136E"/>
+                    <text x="16" y="22" textAnchor="middle" fontSize="15" fontWeight="bold" fill="white" fontFamily="Arial">b</text>
+                  </svg>
+                  <span className="text-xs font-bold text-pink-400">bKash</span>
+                </div>
+                {/* Nagad */}
+                <div className="flex items-center gap-1.5 rounded-lg border border-[#1E2A3A] bg-[#0F1422] px-3 py-2">
+                  <svg width="16" height="16" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <circle cx="16" cy="16" r="16" fill="#F6A623"/>
+                    <text x="16" y="22" textAnchor="middle" fontSize="13" fontWeight="bold" fill="white" fontFamily="Arial">N</text>
+                  </svg>
+                  <span className="text-xs font-bold text-orange-400">Nagad</span>
+                </div>
+                {/* Visa */}
+                <div className="flex items-center justify-center rounded-lg border border-[#1E2A3A] bg-[#1A1F71] px-3 py-2">
+                  <svg width="30" height="10" viewBox="0 0 60 20" aria-label="Visa" fill="none">
+                    <text x="0" y="17" fontSize="19" fontWeight="900" fill="white" fontFamily="Arial" letterSpacing="1">VISA</text>
+                  </svg>
+                </div>
+                {/* Mastercard */}
+                <div className="flex items-center gap-1.5 rounded-lg border border-[#1E2A3A] bg-[#0F1422] px-3 py-2">
+                  <svg width="26" height="16" viewBox="0 0 46 30" aria-label="Mastercard" fill="none">
+                    <circle cx="15" cy="15" r="15" fill="#EB001B"/>
+                    <circle cx="31" cy="15" r="15" fill="#F79E1B"/>
+                    <path d="M23 3.8 C19.5 6.5 17 10.5 17 15 C17 19.5 19.5 23.5 23 26.2 C26.5 23.5 29 19.5 29 15 C29 10.5 26.5 6.5 23 3.8Z" fill="#FF5F00"/>
+                  </svg>
+                  <span className="text-xs font-semibold text-[#8B9CB6]">Card</span>
+                </div>
+                {/* Bank Transfer */}
+                <div className="flex items-center gap-1.5 rounded-lg border border-[#1E2A3A] bg-[#0F1422] px-3 py-2">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M8 10v11M12 10v11M16 10v11M20 10v11"/>
+                  </svg>
+                  <span className="text-xs font-bold text-blue-400">Bank</span>
+                </div>
               </div>
             </div>
           </div>
