@@ -205,20 +205,23 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--tertiary-yellow)] to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#080B14] flex items-center justify-center px-4">
+      {/* Background glow */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FBBF24] opacity-[0.04] blur-[120px]" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
+        className="relative w-full max-w-md"
       >
-        <div className="bg-white rounded-2xl shadow-xl border border-yellow-200/50 p-8">
+        <div className="rounded-2xl border border-[#1E2A3A] bg-[#0F1422] p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Welcome Back
-            </h1>
-            <p className="text-gray-600">Sign in to your WeTrain account</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+            <p className="text-[#8B9CB6]">Sign in to your WeTrain account</p>
           </div>
 
           {/* Error Message */}
@@ -226,25 +229,21 @@ export default function LoginPage() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 flex items-center gap-3 rounded-lg bg-red-50 p-4 border border-red-200"
+              className="mb-6 flex items-center gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-4"
             >
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-              <p className="text-sm text-red-600">{error}</p>
+              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+              <p className="text-sm text-red-400">{error}</p>
             </motion.div>
           )}
 
           {/* Login Form */}
           <form onSubmit={handleSignIn} className="space-y-4 mb-6">
-            {/* Email Field */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-900 mb-2"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-3 w-5 h-5 text-[#8B9CB6]" />
                 <input
                   id="email"
                   type="email"
@@ -252,21 +251,17 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   required
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-yellow)] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#1E2A3A] bg-[#080B14] text-white placeholder-[#8B9CB6] focus:outline-none focus:border-[#FBBF24]/50 focus:ring-1 focus:ring-[#FBBF24]/30"
                 />
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-900 mb-2"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-white mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-3 w-5 h-5 text-[#8B9CB6]" />
                 <input
                   id="password"
                   type="password"
@@ -274,18 +269,17 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-yellow)] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#1E2A3A] bg-[#080B14] text-white placeholder-[#8B9CB6] focus:outline-none focus:border-[#FBBF24]/50 focus:ring-1 focus:ring-[#FBBF24]/30"
                 />
               </div>
             </div>
 
-            {/* Sign In Button */}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full bg-[var(--primary-yellow)] text-gray-900 py-2 rounded-lg font-bold hover:bg-[var(--secondary-yellow)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#FBBF24] text-[#0A0A0A] py-2.5 rounded-lg font-bold hover:bg-[#F59E0B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Signing in..." : "Sign In"}
             </motion.button>
@@ -294,32 +288,28 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-[#1E2A3A]" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
-                New to WeTrain?
-              </span>
+              <span className="px-2 bg-[#0F1422] text-[#8B9CB6]">New to WeTrain?</span>
             </div>
           </div>
 
-          {/* Sign Up Link */}
           <Link href="/register">
             <motion.button
               whileHover={{ scale: 1.02 }}
-              className="w-full border-2 border-[var(--primary-yellow)] text-gray-900 py-2 rounded-lg font-bold hover:bg-[var(--primary-yellow)]/5 transition-colors"
+              className="w-full border border-[#FBBF24]/40 text-white py-2.5 rounded-lg font-bold hover:border-[#FBBF24]/70 hover:bg-[#FBBF24]/5 transition-colors"
               type="button"
             >
               Create an Account
             </motion.button>
           </Link>
 
-          {/* Forgot Password Link */}
           <div className="mt-4 text-center">
             <button
               type="button"
               onClick={() => setShowForgotPassword(true)}
-              className="text-sm text-[var(--primary-yellow)] hover:underline"
+              className="text-sm text-[#FBBF24] hover:underline"
             >
               Forgot your password?
             </button>
@@ -331,7 +321,7 @@ export default function LoginPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
             onClick={() => {
               if (!resetLoading) {
                 setShowForgotPassword(false);
@@ -345,13 +335,11 @@ export default function LoginPage() {
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-2xl shadow-xl border border-yellow-200/50 p-6 max-w-md w-full"
+              className="rounded-2xl border border-[#1E2A3A] bg-[#0F1422] p-6 max-w-md w-full shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Reset Password
-                </h2>
+                <h2 className="text-2xl font-bold text-white">Reset Password</h2>
                 <button
                   type="button"
                   onClick={() => {
@@ -363,7 +351,7 @@ export default function LoginPage() {
                       setResetEmail("");
                     }
                   }}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-[#8B9CB6] hover:text-white"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -371,68 +359,39 @@ export default function LoginPage() {
 
               {resetSuccess ? (
                 <div className="space-y-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-green-800 text-sm font-medium mb-2">
-                      ✅ Password reset email sent!
-                    </p>
-                    <p className="text-green-700 text-sm">
-                      Check your inbox at <strong>{resetEmail.trim()}</strong>
-                    </p>
-                    <p className="text-green-600/80 text-xs mt-2">
-                      💡 Don&apos;t see it? Check your spam folder or wait a few
-                      minutes.
-                    </p>
+                  <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4">
+                    <p className="text-green-400 text-sm font-medium mb-2">✅ Password reset email sent!</p>
+                    <p className="text-green-400/80 text-sm">Check your inbox at <strong>{resetEmail.trim()}</strong></p>
+                    <p className="text-green-400/60 text-xs mt-2">💡 Don&apos;t see it? Check your spam folder.</p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => {
-                      setShowForgotPassword(false);
-                      setResetError(null);
-                      setResetSuccess(false);
-                      setEmailNotFound(false);
-                      setResetEmail("");
-                    }}
-                    className="w-full bg-[var(--primary-yellow)] text-gray-900 py-2 rounded-lg font-bold hover:bg-[var(--secondary-yellow)] transition-colors"
+                    onClick={() => { setShowForgotPassword(false); setResetError(null); setResetSuccess(false); setEmailNotFound(false); setResetEmail(""); }}
+                    className="w-full bg-[#FBBF24] text-[#0A0A0A] py-2 rounded-lg font-bold hover:bg-[#F59E0B] transition-colors"
                   >
                     Close
                   </button>
                 </div>
               ) : emailNotFound ? (
                 <div className="space-y-4">
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                    <p className="text-amber-800 text-sm font-medium mb-2">
-                      ⚠️ No account found
-                    </p>
-                    <p className="text-amber-700 text-sm">
-                      We couldn&apos;t find an account with{" "}
-                      <strong>{resetEmail.trim()}</strong>
-                    </p>
-                    <p className="text-amber-600/80 text-xs mt-2">
-                      Double-check the email or create a new account.
-                    </p>
+                  <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
+                    <p className="text-amber-400 text-sm font-medium mb-2">⚠️ No account found</p>
+                    <p className="text-amber-400/80 text-sm">We couldn&apos;t find an account with <strong>{resetEmail.trim()}</strong></p>
+                    <p className="text-amber-400/60 text-xs mt-2">Double-check the email or create a new account.</p>
                   </div>
                   <div className="flex gap-3">
                     <button
                       type="button"
-                      onClick={() => {
-                        setEmailNotFound(false);
-                        setResetEmail("");
-                      }}
-                      className="flex-1 border-2 border-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                      onClick={() => { setEmailNotFound(false); setResetEmail(""); }}
+                      className="flex-1 border border-[#1E2A3A] text-[#8B9CB6] py-2 rounded-lg font-semibold hover:border-[#FBBF24]/30 hover:text-white transition-colors"
                     >
                       Try Again
                     </button>
                     <Link href="/register" className="flex-1">
                       <button
                         type="button"
-                        onClick={() => {
-                          setShowForgotPassword(false);
-                          setResetError(null);
-                          setResetSuccess(false);
-                          setEmailNotFound(false);
-                          setResetEmail("");
-                        }}
-                        className="w-full bg-[var(--primary-yellow)] text-gray-900 py-2 rounded-lg font-bold hover:bg-[var(--secondary-yellow)] transition-colors"
+                        onClick={() => { setShowForgotPassword(false); setResetError(null); setResetSuccess(false); setEmailNotFound(false); setResetEmail(""); }}
+                        className="w-full bg-[#FBBF24] text-[#0A0A0A] py-2 rounded-lg font-bold hover:bg-[#F59E0B] transition-colors"
                       >
                         Create Account
                       </button>
@@ -441,27 +400,23 @@ export default function LoginPage() {
                 </div>
               ) : (
                 <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <p className="text-gray-600 text-sm">
-                    Enter your email address and we&apos;ll send you a link to
-                    reset your password.
+                  <p className="text-[#8B9CB6] text-sm">
+                    Enter your email and we&apos;ll send you a link to reset your password.
                   </p>
 
                   {resetError && (
-                    <div className="flex items-start gap-3 rounded-lg bg-red-50 p-4 border border-red-200">
-                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-red-600">{resetError}</p>
+                    <div className="flex items-start gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-400">{resetError}</p>
                     </div>
                   )}
 
                   <div>
-                    <label
-                      htmlFor="reset-email"
-                      className="block text-sm font-medium text-gray-900 mb-2"
-                    >
+                    <label htmlFor="reset-email" className="block text-sm font-medium text-white mb-2">
                       Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      <Mail className="absolute left-3 top-3 w-5 h-5 text-[#8B9CB6]" />
                       <input
                         id="reset-email"
                         type="email"
@@ -469,7 +424,7 @@ export default function LoginPage() {
                         onChange={(e) => setResetEmail(e.target.value)}
                         placeholder="you@example.com"
                         required
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-yellow)] focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#1E2A3A] bg-[#080B14] text-white placeholder-[#8B9CB6] focus:outline-none focus:border-[#FBBF24]/50 focus:ring-1 focus:ring-[#FBBF24]/30"
                       />
                     </div>
                   </div>
@@ -477,7 +432,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={resetLoading}
-                    className="w-full bg-[var(--primary-yellow)] text-gray-900 py-2 rounded-lg font-bold hover:bg-[var(--secondary-yellow)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#FBBF24] text-[#0A0A0A] py-2 rounded-lg font-bold hover:bg-[#F59E0B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {resetLoading ? "Sending..." : "Send Reset Link"}
                   </button>

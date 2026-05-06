@@ -11,17 +11,23 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero-style Header */}
-      <section className="relative bg-gradient-to-b from-yellow-200 to-white py-20 text-center">
+      <section className="relative bg-[#080B14] py-20 text-center overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FBBF24] opacity-[0.04] blur-[100px]" />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto px-6"
+          className="relative max-w-3xl mx-auto px-6"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <span className="mb-4 inline-block rounded-full border border-[#FBBF24]/20 bg-[#FBBF24]/5 px-4 py-1.5 text-sm font-medium text-[#FBBF24]">
+            About Us
+          </span>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 mt-3">
             About WeTrainEducation & Tech
           </h1>
-          <p className="text-lg text-gray-700">
+          <p className="text-lg text-[#8B9CB6]">
             Empowering businesses and professionals through innovative
             technology, comprehensive training, and marketing excellence.
           </p>
@@ -29,18 +35,18 @@ export default function AboutPage() {
       </section>
 
       {/* Main Content */}
-      <section className="max-w-4xl mx-auto pb-20 px-6">
+      <section className="bg-[#080B14] max-w-4xl mx-auto pb-20 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           {/* Content Card - Both Languages */}
-          <div className="text-gray-700 leading-7 border border-yellow-300 rounded-lg p-6 bg-yellow-50">
+          <div className="text-[#8B9CB6] leading-7 border border-[#1E2A3A] rounded-xl p-8 bg-[#0F1422]">
             {showBengali && (
               <>
                 {/* Bengali Version */}
-                <h2 className="text-2xl font-bold mb-4">আমাদের সম্পর্কে</h2>
+                <h2 className="text-2xl font-bold mb-4 text-white">আমাদের সম্পর্কে</h2>
                 <p className="mb-4">
                   WeTrainEducation & Tech হল একটি গতিশীল প্রযুক্তি ও শিক্ষা
                   সংস্থা যা ব্যবসা এবং পেশাদারদের ডিজিটাল যুগে সফল হতে সাহায্য
@@ -49,7 +55,7 @@ export default function AboutPage() {
                   উচ্চতায় নিয়ে যেতে পারে।
                 </p>
 
-                <h3 className="text-xl font-bold mb-3">আমাদের মিশন</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">আমাদের মিশন</h3>
                 <p className="mb-4">
                   আমাদের মিশন হল বিশ্বমানের শিক্ষা, এন্টারপ্রাইজ সফটওয়্যার এবং
                   মার্কেটিং পরিষেবা প্রদান করা যা আমাদের ক্লায়েন্টদের
@@ -57,7 +63,7 @@ export default function AboutPage() {
                   উদ্ভাবনকে কাজে লাগিয়ে সমস্যার সৃজনশীল সমাধান প্রদান করি।
                 </p>
 
-                <h3 className="text-xl font-bold mb-3">আমাদের মূল্যবোধ</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">আমাদের মূল্যবোধ</h3>
                 <div className="mb-4 space-y-2">
                   <p>
                     • <strong>সততা:</strong> আমরা স্বচ্ছতা এবং সততার সাথে
@@ -81,7 +87,7 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <h3 className="text-xl font-bold mb-3">আমাদের সেবা</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">আমাদের সেবা</h3>
                 <p className="mb-3">
                   আমরা নিম্নলিখিত তিনটি প্রধান ক্ষেত্রে বিশেষজ্ঞ পরিষেবা প্রদান
                   করি:
@@ -103,7 +109,7 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <h3 className="text-xl font-bold mb-3">যোগাযোগ</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">যোগাযোগ</h3>
                 <p>
                   প্রশ্ন বা সহযোগিতার জন্য আমাদের সাথে যোগাযোগ করুন: <br />
                   <strong>ইমেইল:</strong> {supportEmail} <br />
@@ -114,7 +120,7 @@ export default function AboutPage() {
 
             {!showBengali && (
               <>
-                <h2 className="text-2xl font-bold mb-4">Who We Are</h2>
+                <h2 className="text-2xl font-bold mb-4 text-white">Who We Are</h2>
                 <p>
                   WeTrainEducation & Tech is a dynamic technology and education
                   company dedicated to helping businesses and professionals
@@ -126,7 +132,7 @@ export default function AboutPage() {
                   needs.
                 </p>
 
-                <h3 className="text-xl font-bold">Our Story</h3>
+                <h3 className="text-xl font-bold text-white mt-4">Our Story</h3>
                 <p>
                   Foundation to Democratize Access to World-class Technology
                   Education and Services, WeTrainEducation & Tech has grown to
@@ -137,7 +143,7 @@ export default function AboutPage() {
                   businesses seeking growth through digital transformation.
                 </p>
 
-                <h3 className="text-xl font-bold">Our Core Values</h3>
+                <h3 className="text-xl font-bold text-white mt-4">Our Core Values</h3>
                 <ul className="list-disc list-inside space-y-2">
                   <li>
                     <strong>Integrity:</strong> Transparent communication and
@@ -161,7 +167,7 @@ export default function AboutPage() {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-bold">What We Offer</h3>
+                <h3 className="text-xl font-bold text-white mt-4">What We Offer</h3>
                 <p>We specialize in three core areas:</p>
                 <ul className="list-disc list-inside space-y-2">
                   <li>
@@ -181,7 +187,7 @@ export default function AboutPage() {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-bold">Our Team</h3>
+                <h3 className="text-xl font-bold text-white mt-4">Our Team</h3>
                 <p>
                   Our team brings together strategists, developers, designers,
                   and marketing experts with diverse backgrounds and expertise.
@@ -190,7 +196,7 @@ export default function AboutPage() {
                   to upholding our values and supporting your success.
                 </p>
 
-                <h3 className="text-xl font-bold">Why Choose Us?</h3>
+                <h3 className="text-xl font-bold text-white mt-4">Why Choose Us?</h3>
                 <ul className="list-disc list-inside space-y-2">
                   <li>
                     <strong>Proven Track Record:</strong> 200+ projects
@@ -215,7 +221,7 @@ export default function AboutPage() {
                   </li>
                 </ul>
 
-                <h3 className="text-xl font-bold">Let&apos;s Work Together</h3>
+                <h3 className="text-xl font-bold text-white mt-4">Let&apos;s Work Together</h3>
                 <p>
                   Whether you need training, software development, marketing
                   assistance, or a combination of services, we&apos;re here to
@@ -223,7 +229,7 @@ export default function AboutPage() {
                   WeTrainEducation & Tech can support your growth journey.
                 </p>
 
-                <h3 className="text-xl font-bold mb-3">Contact</h3>
+                <h3 className="text-xl font-bold mb-3 text-white">Contact</h3>
                 <p>
                   For questions or assistance, please contact us: <br />
                   <strong>Email:</strong> {supportEmail} <br />
@@ -237,7 +243,7 @@ export default function AboutPage() {
           <div className="mt-6 mx-auto max-w-max">
             <button
               onClick={() => setShowBengali(!showBengali)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500 text-gray-900 font-semibold rounded-lg hover:bg-yellow-600 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBBF24] text-[#0A0A0A] font-semibold rounded-lg hover:bg-[#F59E0B] transition-colors"
             >
               <Languages className="h-4 w-4" />
               {showBengali ? "Show English" : "বাংলায় দেখুন"}
