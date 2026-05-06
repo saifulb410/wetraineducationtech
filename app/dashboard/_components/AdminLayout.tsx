@@ -592,7 +592,7 @@ export default function AdminLayout({
   const appSidebar = (
     <Sidebar
       className={cn(
-        "!bg-[var(--tertiary-yellow)] text-gray-900 border-r border-[var(--primary-yellow)]",
+        "!bg-[#0F1422] text-white border-r border-[#1E2A3A]",
       )}
     >
       <SidebarHeader>
@@ -653,7 +653,7 @@ export default function AdminLayout({
                         <SidebarMenuButton
                           asChild
                           isActive={isActive}
-                          className="text-gray-700 hover:bg-yellow-100 hover:text-gray-900 transition-colors data-[active=true]:!bg-[var(--primary-yellow)] data-[active=true]:border data-[active=true]:!text-gray-900 data-[active=true]:hover:!text-gray-900 hover:border hover:border-amber-300 border border-transparent"
+                          className="text-[#8B9CB6] hover:bg-[#FBBF24]/10 hover:text-white transition-colors data-[active=true]:!bg-[#FBBF24] data-[active=true]:border data-[active=true]:!text-[#0A0A0A] data-[active=true]:hover:!text-[#0A0A0A] hover:border hover:border-[#FBBF24]/30 border border-transparent"
                         >
                           <Link href={item.href}>
                             <SidebarNavLink
@@ -673,7 +673,7 @@ export default function AdminLayout({
         })}
       </SidebarContent>
       <SidebarFooter>
-        <div className="px-4 py-2 text-xs text-muted-foreground text-center">
+        <div className="px-4 py-2 text-xs text-[#8B9CB6] text-center">
           Version 1.0.0
         </div>
       </SidebarFooter>
@@ -682,11 +682,11 @@ export default function AdminLayout({
   );
 
   return (
-    <SidebarProvider className="min-h-screen bg-white text-gray-900">
+    <SidebarProvider className="min-h-screen bg-[#080B14] text-white">
       {appSidebar}
-      <SidebarInset className="bg-white text-gray-900 h-svh overflow-y-auto">
+      <SidebarInset className="bg-[#080B14] text-white h-svh overflow-y-auto">
         {/* Sticky Header */}
-        <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-[var(--primary-yellow)] !bg-[var(--tertiary-yellow)] backdrop-blur-sm px-4">
+        <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-[#1E2A3A] !bg-[#0F1422] backdrop-blur-sm px-4">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
